@@ -1,6 +1,6 @@
 export class Point {
-    private x: number;
-    private y: number;
+    x: number;
+    y: number;
 
     public constructor(x: number, y: number);
     public constructor(...args: [number, number]) {
