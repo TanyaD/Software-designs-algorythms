@@ -7,24 +7,14 @@ export abstract class Shape {
 
     constructor(points: Point[]);
     constructor(points: Point[], color: string, filled: boolean);
-    constructor(...args: [ Point[], string?, boolean? ]) {
-        const [ points, color, filled ] = args;
-
+    constructor(points: Point[], color: string = "green", filled: boolean = true) {
         if (points.length < 3) {
             throw new Error('At least 3 points');
         }
 
-        if (args.length === 1) {
-            this.color = "green";
-            this.filled = true;
-        }
-
-        if (args.length === 3) {
-            this.color = color;
-            this.filled = filled;
-        }
-
         this.points = points;
+        this.color = color;
+        this.filled = filled
     }
 
     public toString(): string {
@@ -35,13 +25,9 @@ export abstract class Shape {
 
     public getPerimeter(): number {
         let result = 0;
-
         for (let i = 0; i < this.points.length; i++) {
-            for (let j = i + 1; j < this.points.length; j++) {
-                result += this.points[i].distance(this.points[j])
-            }
+            result += this.points[i].distance(this.points[(i + 1) % this.points.length]);
         }
-
         return result;
     }
 
